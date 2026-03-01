@@ -10,7 +10,8 @@ defmodule Parquedero do
     IO.puts("3. Calcular pago de un vehiculo")
     IO.puts("4. Salir")
 
-    opcion = Util.ingresar("Ingrese una opcion: ", :texto)
+    # Cambio: Se usa ingresar_texto/1 directamente
+    opcion = Util.ingresar_texto("Ingrese una opcion: ")
 
     case opcion do
       "1" ->
@@ -39,14 +40,15 @@ defmodule Parquedero do
   # ----------------------------------
 
   def ingresar_vehiculo(lista) do
-    nombre = Util.ingresar("Ingrese el nombre del propietario: ", :texto)
-    placa = Util.ingresar("Ingrese la placa del vehiculo: ", :texto)
+    # Cambios: Nombres de función corregidos
+    nombre = Util.ingresar_texto("Ingrese el nombre del propietario: ")
+    placa = Util.ingresar_texto("Ingrese la placa del vehiculo: ")
 
     IO.puts("Tipo de vehiculo:")
     IO.puts("1. Electrico (20% descuento)")
     IO.puts("2. Convencional")
 
-    opcion_tipo = Util.ingresar("Seleccione opcion: ", :texto)
+    opcion_tipo = Util.ingresar_texto("Seleccione opcion: ")
 
     tipo =
       case opcion_tipo do
@@ -55,7 +57,7 @@ defmodule Parquedero do
         _ -> {"error", mensaje: "Opción inválida, se asignará tipo convencional"}
       end
 
-    opcion_cliente = Util.ingresar("¿Es cliente frecuente? (si/no): ", :texto)
+    opcion_cliente = Util.ingresar_texto("¿Es cliente frecuente? (si/no): ")
 
     cliente =
       case String.downcase(opcion_cliente) do
@@ -99,15 +101,16 @@ defmodule Parquedero do
   # ----------------------------------
 
   def calcular_pago(lista) do
-    placa_buscar = Util.ingresar("Ingrese la placa del vehiculo: ", :texto)
+    # Cambio: Nombre de función corregido
+    placa_buscar = Util.ingresar_texto("Ingrese la placa del vehiculo: ")
 
     vehiculo = Enum.find(lista, fn v -> v.placa == placa_buscar end)
 
     if vehiculo == nil do
       IO.puts("Vehiculo no encontrado ❌")
     else
-      horas = Util.ingresar("Ingrese horas que estuvo parqueado: ", :texto)
-              |> String.to_integer()
+      # Cambio: Aquí usamos ingresar_numero/1 directamente para ahorrar el String.to_integer
+      horas = Util.ingresar_numero("Ingrese horas que estuvo parqueado: ")
 
       total = tarifa(horas)
 
@@ -127,7 +130,6 @@ defmodule Parquedero do
       IO.puts("-------------------")
     end
   end
-
 end
 
 Parquedero.main()
